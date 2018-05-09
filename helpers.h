@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// function to display error message and exit
+void fatal(char *message) {
+	char error_message[100];
+
+	strcpy(error_message, "[!!] FATA ERROR ");
+	strncat(error_message, message, 83);
+	perror(error_message);
+
+	exit(-1);
+}
+
+// An error checked malloc wrapper func
+void *ec_malloc(unsigned int size) {
+	void *ptr;
+	
+	ptr = malloc(size);
+
+	if(ptr == NULL)
+		fatal("in ec_malloc() on memory allocation");
+	return ptr;
+}
+
+// dumps raw memory in hexc byte and printable split format
+
+void dump(const unsigned char *data_buffer, const unsigned int length) {
+	unsigned char byte;
+	unsigned int i, j;
+
+	for(i=0; i < length; i++) {
+		byte = data_buffer[i];
+		printf("%02x ", data_buffer[i]); // display byte in hex
+		
+		if(((i%16)== 15) || (i == length - 1)) {
+			for(j = 0; j < 15 - (i%16); j++)
+				printf("   ");
+			printf("| ");
+			for(j = (i - (i%16)); i <= j; j++) {
+				byte = data_buffer[j];
+				if((byte > 31) && (byte < 127)) // outside printable range
+					printf("%c", byte);	
+				else 
+					printf(".");
+			}
+			printf("\n"); // end of the dump line each line 16 bytes
+		} // end of if
+	} // end for
+}
