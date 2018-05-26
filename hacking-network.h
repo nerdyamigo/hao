@@ -52,12 +52,12 @@ int recv_line(int sockfd, unsigned char *dest_buffer) {
 struct ether_hdr {
 	unsigned char ether_dest_addr[ETHER_ADDR_LEN]; // Destination MAC address
 	unsigned char ether_src_addr[ETHER_ADDR_LEN];  // Source MAC address
-	unsigned short ether_type; // type of Ethernet packet
+	unsigned short ether_type; 										 // type of Ethernet packet
 };
 
 struct ip_hdr {
 	unsigned char ip_version_and_header_length;	//version and header length
-	unsigned short ip_tos;											// Type of service
+	unsigned char ip_tos;												// Type of service
 	unsigned short ip_len;											// Total length
 	unsigned short ip_id;												// Identification number
 	unsigned short ip_frag_offset;							// Fragment offset and number
@@ -86,5 +86,4 @@ struct tcp_hdr {
 	unsigned short tcp_checksum;								// TCP checksum
 	unsigned short tcp_urgent;									// TCP urgent pointer	
 };
-
 
